@@ -11,7 +11,7 @@ import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate } from 'workbox-strategies';
+import { NetworkFirst, StaleWhileRevalidate } from 'workbox-strategies';
 
 clientsClaim();
 
@@ -60,14 +60,28 @@ registerRoute(
   })
 );
 
-registerRoute(({url}) => url.origin == "https://fonts.googleapis.com" || url.origin == "https://fonts.gstatic.com", new NetworkFirst({
-  cacheName;
+registerRoute(({url}) => url.origin === "https://fonts.googleapis.com" || 
+url.origin === "https://fonts.gstatic.com", new NetworkFirst({
+  cacheName: "fonts",
   plugins: [
     new ExpirationPlugin({
       maxAgeSecond: 60 * 60 * 24 * 356,
+      maxEntries: 30
     })
-  ]
-}))
+  ],
+})
+);
+
+registerRoute(({url}) => url.origin === "https://cdn.tailwindcss.com" , new NetworkFirst({
+  cacheName: "tailwind",
+  plugins: [
+    new ExpirationPlugin({
+      maxAgeSecond: 60 * 60 * 24 * 356,
+      maxEntries: 30
+    })
+  ],
+})
+);
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener('message', (event) => {
