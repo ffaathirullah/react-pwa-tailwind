@@ -295,9 +295,9 @@ export default function Arrived() {
               />
             </div>
             <h5 className="text-lg font-semibold mt-4">Racking Plants</h5>
-            <span className="">IDR 599.400</span>
+            <span className="">IDR 599.4001</span>
             <a href="#details.html" className="stretched-link">
-         
+         1
             </a>
           </div>
       
