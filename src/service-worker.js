@@ -60,6 +60,14 @@ registerRoute(
   })
 );
 
+registerRoute(({url}) => url.origin == "https://fonts.googleapis.com" || url.origin == "https://fonts.gstatic.com", new NetworkFirst({
+  cacheName;
+  plugins: [
+    new ExpirationPlugin({
+      maxAgeSecond: 60 * 60 * 24 * 356,
+    })
+  ]
+}))
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener('message', (event) => {
