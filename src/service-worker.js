@@ -68,4 +68,17 @@ self.addEventListener('message', (event) => {
   }
 });
 
+
+self.addEventListener('install', (event) => {
+
+  console.log("Buat Install");
+
+  const asyncInstall = new Promise(function(resolve) {
+    console.log("waiting to install");
+    setTimeout(resolve, 5000)
+  })
+
+  event.waitUntil(asyncInstall);
+});
+
 // Any other custom service worker logic can go here.
